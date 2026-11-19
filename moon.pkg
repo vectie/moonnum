@@ -1,0 +1,9 @@
+import {
+  "moonbitlang/core/math",
+  "moonbitlang/core/json",
+}
+
+import {
+  "vectie/moonnum" @numeric,
+  "moonbitlang/core/math",
+} for "test"

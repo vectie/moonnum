@@ -1,0 +1,102 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "vectie/moonnum"
+
+import {
+  "moonbitlang/core/debug",
+  "moonbitlang/core/json",
+}
+
+// Values
+pub fn finite(Double) -> Bool
+
+pub fn fit_normalization(Array[Array[Double]], Double) -> Normalization
+
+// Errors
+
+// Types and methods
+pub struct Adam {
+  first : Array[Double]
+  second : Array[Double]
+  mut steps : Int
+  mut learning_rate : Double
+  beta1 : Double
+  beta2 : Double
+  epsilon : Double
+} derive(ToJson, @json.FromJson)
+pub fn Adam::new(Int, Double, beta1? : Double, beta2? : Double, epsilon? : Double) -> Self
+pub fn Adam::restore(Self, Self) -> Unit
+pub fn Adam::set_learning_rate(Self, Double) -> Unit
+pub fn Adam::snapshot(Self) -> Self
+pub fn Adam::step(Self, Array[Double], Tape, Array[Value], max_norm? : Double, max_value? : Double, gradient_trace? : (Array[Double], Array[Double], Double) -> Unit) -> Double
+
+type LinearBlock
+
+pub(all) struct MLP {
+  dimensions : Array[Int]
+  parameters : Array[Double]
+} derive(@debug.Debug)
+pub fn MLP::bind(Self, Tape) -> Array[Value]
+pub fn MLP::forward(Self, Tape, Array[Value], Array[Value]) -> Array[Value]
+pub fn MLP::new(Array[Int], Rng, zero_last? : Bool) -> Self
+pub fn MLP::predict(Self, Array[Double]) -> Array[Double]
+pub fn MLP::snapshot(Self) -> Self
+
+type Node
+
+pub(all) struct Normalization {
+  mean : Array[Double]
+  scale : Array[Double]
+} derive(@debug.Debug)
+pub fn Normalization::apply(Self, Tape, Array[Value]) -> Array[Value]
+
+pub struct Rng {
+  // private fields
+} derive(@debug.Debug)
+pub fn Rng::index(Self, Int) -> Int
+pub fn Rng::new(UInt) -> Self
+pub fn Rng::normal(Self) -> Double
+pub fn Rng::set_state(Self, UInt) -> Unit
+pub fn[T] Rng::shuffle(Self, Array[T]) -> Unit
+pub fn Rng::snapshot(Self) -> Self
+pub fn Rng::state(Self) -> UInt
+pub fn Rng::uniform(Self) -> Double
+
+pub struct Tape {
+  // private fields
+}
+pub fn Tape::abs(Self, Value) -> Value
+pub fn Tape::acos(Self, Value) -> Value
+pub fn Tape::add(Self, Value, Value) -> Value
+pub fn Tape::atan2(Self, Value, Value) -> Value
+pub fn Tape::backward(Self, Value) -> Unit
+pub fn Tape::clamp(Self, Value, Double, Double) -> Value
+pub fn Tape::cos(Self, Value) -> Value
+pub fn Tape::div(Self, Value, Value) -> Value
+pub fn Tape::exp(Self, Value) -> Value
+pub fn Tape::gradient(Self, Value) -> Double
+pub fn Tape::linear(Self, Array[Value], Array[Value], Int, offset? : Int) -> Array[Value]
+pub fn Tape::log(Self, Value) -> Value
+pub fn Tape::maximum(Self, Value, Value) -> Value
+pub fn Tape::mean(Self, Array[Value]) -> Value
+pub fn Tape::minimum(Self, Value, Value) -> Value
+pub fn Tape::mul(Self, Value, Value) -> Value
+pub fn Tape::new() -> Self
+pub fn Tape::node_count(Self) -> Int
+pub fn Tape::scalar(Self, Double) -> Value
+pub fn Tape::scale(Self, Value, Double) -> Value
+pub fn Tape::sigmoid(Self, Value) -> Value
+pub fn Tape::silu(Self, Value) -> Value
+pub fn Tape::sin(Self, Value) -> Value
+pub fn Tape::sqrt(Self, Value) -> Value
+pub fn Tape::sub(Self, Value, Value) -> Value
+pub fn Tape::tanh(Self, Value) -> Value
+pub fn Tape::vector(Self, Array[Double]) -> Array[Value]
+
+pub struct Value {
+  id : Int
+  value : Double
+} derive(@debug.Debug)
+
+// Type aliases
+
+// Traits
