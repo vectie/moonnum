@@ -1,0 +1,31 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "vectie/moonnum/blas"
+
+import {
+  "moonbitlang/core/debug",
+}
+
+// Values
+
+// Errors
+pub suberror BlasError {
+  Invalid(String)
+  Unavailable(String)
+} derive(@debug.Debug)
+
+// Types and methods
+pub struct Backend {
+  // private fields
+}
+pub fn Backend::gemm(Self, Array[Double], Array[Double], Int, Int, Int, transpose_a? : Bool, transpose_b? : Bool) -> Array[Double] raise BlasError
+pub fn Backend::gemm_f32(Self, Array[Float], Array[Float], Int, Int, Int, transpose_a? : Bool, transpose_b? : Bool) -> Array[Float] raise BlasError
+pub fn Backend::is_native(Self) -> Bool
+pub fn Backend::library_path(Self) -> String?
+pub fn Backend::load(String) -> Self raise BlasError
+pub fn Backend::portable() -> Self
+
+type Handle
+
+// Type aliases
+
+// Traits

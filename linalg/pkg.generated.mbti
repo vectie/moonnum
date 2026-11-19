@@ -1,0 +1,30 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "vectie/moonnum/linalg"
+
+import {
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn least_squares(Array[Array[Double]], Array[Array[Double]], rcond? : Double) -> LeastSquares raise LinearAlgebraError
+
+pub fn solve(Array[Array[Double]], Array[Array[Double]], tolerance? : Double) -> Array[Array[Double]] raise LinearAlgebraError
+
+// Errors
+pub suberror LinearAlgebraError {
+  Invalid(String)
+  Singular(Int)
+} derive(@debug.Debug)
+
+// Types and methods
+pub(all) struct LeastSquares {
+  solution : Array[Array[Double]]
+  rank : Int
+  residual_sum_squares : Array[Double]
+  condition_estimate : Double
+  pivots : Array[Int]
+} derive(@debug.Debug)
+
+// Type aliases
+
+// Traits

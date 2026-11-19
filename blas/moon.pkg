@@ -1,0 +1,17 @@
+import {
+  "moonbitlang/core/encoding/utf8",
+}
+
+options(
+  "native-stub": [ "blas_stub.c" ],
+  targets: {
+    "native.mbt": [ "native" ],
+    "portable.mbt": [ "wasm", "wasm-gc", "js", "llvm" ],
+    "native_test.mbt": [ "native" ],
+  },
+)
+
+import {
+  "vectie/moonnum/blas",
+  "moonbitlang/core/env",
+} for "test"

@@ -1,0 +1,68 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "vectie/moonnum/tensor"
+
+import {
+  "moonbitlang/core/debug",
+  "vectie/moonnum/blas",
+}
+
+// Values
+
+// Errors
+pub suberror TensorError {
+  Invalid(String)
+} derive(@debug.Debug)
+
+// Types and methods
+pub(all) enum DType {
+  F32
+  F64
+} derive(Eq, @debug.Debug)
+
+type Storage derive(@debug.Debug)
+
+pub struct Tensor {
+  // private fields
+} derive(@debug.Debug)
+pub fn Tensor::add(Self, Self) -> Self raise TensorError
+pub fn Tensor::binary(Self, Self, (Double, Double) -> Double) -> Self raise TensorError
+pub fn Tensor::broadcast_to(Self, Array[Int]) -> Self raise TensorError
+pub fn Tensor::cast(Self, DType) -> Self
+pub fn Tensor::clone(Self) -> Self
+pub fn Tensor::contiguous(Self) -> Self
+pub fn Tensor::div(Self, Self) -> Self raise TensorError
+pub fn Tensor::dtype(Self) -> DType
+pub fn Tensor::exp(Self) -> Self
+pub fn Tensor::from_array(Array[Double], Array[Int], dtype? : DType) -> Self raise TensorError
+pub fn Tensor::from_f32(Array[Float], Array[Int]) -> Self raise TensorError
+pub fn Tensor::full(Array[Int], Double, dtype? : DType) -> Self raise TensorError
+pub fn Tensor::get(Self, Array[Int]) -> Double raise TensorError
+pub fn Tensor::is_contiguous(Self) -> Bool
+pub fn Tensor::log(Self) -> Self
+pub fn Tensor::map(Self, (Double) -> Double) -> Self
+pub fn Tensor::matmul(Self, Self, backend? : @blas.Backend) -> Self raise
+pub fn Tensor::mean(Self, axis? : Int, keepdim? : Bool) -> Self raise TensorError
+pub fn Tensor::mul(Self, Self) -> Self raise TensorError
+pub fn Tensor::numel(Self) -> Int
+pub fn Tensor::permute(Self, Array[Int]) -> Self raise TensorError
+pub fn Tensor::rank(Self) -> Int
+pub fn Tensor::reshape(Self, Array[Int]) -> Self raise TensorError
+pub fn Tensor::scalar(Double, dtype? : DType) -> Self
+pub fn Tensor::scale(Self, Double) -> Self
+pub fn Tensor::set(Self, Array[Int], Double) -> Unit raise TensorError
+pub fn Tensor::shape(Self) -> Array[Int]
+pub fn Tensor::silu(Self) -> Self
+pub fn Tensor::slice(Self, Int, Int, Int, step? : Int) -> Self raise TensorError
+pub fn Tensor::storage_offset(Self) -> Int
+pub fn Tensor::strides(Self) -> Array[Int]
+pub fn Tensor::sub(Self, Self) -> Self raise TensorError
+pub fn Tensor::sum(Self, axis? : Int, keepdim? : Bool) -> Self raise TensorError
+pub fn Tensor::tanh(Self) -> Self
+pub fn Tensor::to_array(Self) -> Array[Double]
+pub fn Tensor::transpose(Self, Int, Int) -> Self raise TensorError
+pub fn Tensor::view(Self, Array[Int]) -> Self raise TensorError
+pub fn Tensor::zeros(Array[Int], dtype? : DType) -> Self raise TensorError
+
+// Type aliases
+
+// Traits
