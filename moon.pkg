@@ -1,4 +1,6 @@
 import {
+  "moonbitlang/core/cmp",
+  "moonbitlang/core/debug",
   "moonbitlang/core/math",
   "moonbitlang/core/json",
 }

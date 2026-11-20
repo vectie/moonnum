@@ -14,8 +14,8 @@ test "native CBLAS agrees with portable deterministic matrices" {
   for i in 0..<actual.length() {
     assert_true((actual[i] - expected[i]).abs() < 0.000000000001)
   }
-  let af = a.map(v => v.to_float())
-  let bf = b.map(v => v.to_float())
+  let af = a.map(v => Float::from_double(v))
+  let bf = b.map(v => Float::from_double(v))
   let expected32 = portable.gemm_f32(af, bf, 5, 3, 7)
   let actual32 = native.gemm_f32(af, bf, 5, 3, 7)
   for i in 0..<actual32.length() {

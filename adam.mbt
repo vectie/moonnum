@@ -69,7 +69,7 @@ pub fn Adam::step(
   guard finite(norm) && max_norm >= 0 && max_value >= 0 else {
     abort("nonfinite gradient norm or invalid clipping bound")
   }
-  let coefficient = @math.minimum(1.0, max_norm / (norm + 0.000001))
+  let coefficient = @cmp.minimum(1.0, max_norm / (norm + 0.000001))
   let applied = gradient.map(g => {
     let raw = g * coefficient
     if raw > max_value {

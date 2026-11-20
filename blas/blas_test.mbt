@@ -34,5 +34,11 @@ test "portable BLAS multiplies row-major and transposed inputs in both precision
     ),
     [0.0F],
   )
-  assert_true((try? backend.gemm([1.0], [2.0], 2, 2, 2)) is Err(_))
+  assert_true(
+    try backend.gemm([1.0], [2.0], 2, 2, 2) catch {
+      _ => true
+    } noraise {
+      _ => false
+    },
+  )
 }

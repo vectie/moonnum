@@ -33,14 +33,24 @@ pub(all) struct Basis3 {
   zy : Double
   zz : Double
 } derive(Eq, ToJson, @debug.Debug, @json.FromJson)
+pub fn Basis3::equal(Self, Self) -> Bool
+pub fn Basis3::from_json(Json, @json.JsonPath) -> Self raise @json.JsonDecodeError
 pub fn Basis3::mul_basis3(Self, Self) -> Self
 pub fn Basis3::mul_vec3(Self, Vec3) -> Vec3
+pub fn Basis3::not_equal(Self, Self) -> Bool
+pub fn Basis3::to_json(Self) -> Json
+pub fn Basis3::to_repr(Self) -> @debug.Repr
 
 pub(all) struct Transform3 {
   basis : Basis3
   translation : Vec3
 } derive(Eq, ToJson, @debug.Debug, @json.FromJson)
 pub fn Transform3::compose(Self, Self) -> Self
+pub fn Transform3::equal(Self, Self) -> Bool
+pub fn Transform3::from_json(Json, @json.JsonPath) -> Self raise @json.JsonDecodeError
+pub fn Transform3::not_equal(Self, Self) -> Bool
+pub fn Transform3::to_json(Self) -> Json
+pub fn Transform3::to_repr(Self) -> @debug.Repr
 pub fn Transform3::transform_point(Self, Vec3) -> Vec3
 
 pub(all) struct Vec3 {
@@ -51,10 +61,15 @@ pub(all) struct Vec3 {
 pub fn Vec3::add(Self, Self) -> Self
 pub fn Vec3::cross(Self, Self) -> Self
 pub fn Vec3::dot(Self, Self) -> Double
+pub fn Vec3::equal(Self, Self) -> Bool
+pub fn Vec3::from_json(Json, @json.JsonPath) -> Self raise @json.JsonDecodeError
 pub fn Vec3::length(Self) -> Double
 pub fn Vec3::length_squared(Self) -> Double
+pub fn Vec3::not_equal(Self, Self) -> Bool
 pub fn Vec3::scale(Self, Double) -> Self
 pub fn Vec3::sub(Self, Self) -> Self
+pub fn Vec3::to_json(Self) -> Json
+pub fn Vec3::to_repr(Self) -> @debug.Repr
 
 // Type aliases
 

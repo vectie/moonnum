@@ -197,7 +197,7 @@ pub fn fit_normalization(
       variance[j] += delta * delta / rows.length().to_double()
     }
   }
-  { mean, scale: variance.map(v => @math.maximum(v.sqrt(), floor)), }
+  { mean, scale: variance.map(v => @cmp.maximum(v.sqrt(), floor)), }
 }
 
 ///|

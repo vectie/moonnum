@@ -246,7 +246,7 @@ pub fn Tape::linear(
   })
   self.blocks.push({
     inputs: inputs.copy(),
-    parameters: parameters[offset:offset + nin * outputs + outputs].to_array(),
+    parameters: parameters[offset:offset + nin * outputs + outputs].to_owned(),
     offset: 0,
     first_output,
     outputs,

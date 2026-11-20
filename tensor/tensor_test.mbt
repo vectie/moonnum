@@ -10,7 +10,13 @@ test "strided views share storage while clone and noncontiguous reshape copy" {
   let cloned = t.clone()
   cloned.set([0, 0], 99)
   assert_eq(a.get([0, 0]), 0)
-  assert_true((try? t.view([6])) is Err(_))
+  assert_true(
+    try t.view([6]) catch {
+      _ => true
+    } noraise {
+      _ => false
+    },
+  )
   let flat = t.reshape([6])
   flat.set([0], 88)
   assert_eq(a.get([0, 0]), 0)
@@ -45,22 +51,25 @@ test "F32 stores actual Float and rounds each ordered accumulation" {
   let a = @tensor.Tensor::from_array(
     [16777216.0, 1.0, -16777216.0],
     [3],
-    dtype=@tensor.F32,
+    dtype=F32,
   )
   assert_eq(a.sum().get([]), 0)
   let double = @tensor.Tensor::from_array(
     [16777216.0, 1.0, -16777216.0],
     [3],
-    dtype=@tensor.F64,
+    dtype=F64,
   )
   assert_eq(double.sum().get([]), 1)
-  assert_eq(
-    a.matmul(@tensor.Tensor::full([3], 1, dtype=@tensor.F32)).get([]),
-    0,
-  )
-  let stored = @tensor.Tensor::from_array([16777217.0], [1], dtype=@tensor.F32)
+  assert_eq(a.matmul(@tensor.Tensor::full([3], 1, dtype=F32)).get([]), 0)
+  let stored = @tensor.Tensor::from_array([16777217.0], [1], dtype=F32)
   assert_eq(stored.get([0]), 16777216)
-  assert_true((try? a.add(double)) is Err(_))
+  assert_true(
+    try a.add(double) catch {
+      _ => true
+    } noraise {
+      _ => false
+    },
+  )
 }
 
 ///|
@@ -71,8 +80,20 @@ test "empty tensors and invalid views have explicit behavior" {
   let huge_empty = @tensor.Tensor::zeros([0, 2147483647, 2147483647])
   assert_eq(huge_empty.numel(), 0)
   assert_eq(empty.matmul(@tensor.Tensor::zeros([3, 4])).shape(), [2, 0, 4])
-  assert_true((try? @tensor.Tensor::zeros([-1])) is Err(_))
-  assert_true((try? empty.broadcast_to([2, 1, 3])) is Err(_))
+  assert_true(
+    try @tensor.Tensor::zeros([-1]) catch {
+      _ => true
+    } noraise {
+      _ => false
+    },
+  )
+  assert_true(
+    try empty.broadcast_to([2, 1, 3]) catch {
+      _ => true
+    } noraise {
+      _ => false
+    },
+  )
   let scalar = @tensor.Tensor::scalar(2)
   let broadcast = scalar.broadcast_to([2, 2])
   broadcast.set([1, 0], 3)

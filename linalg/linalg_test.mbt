@@ -6,7 +6,11 @@ test "scaled pivot solve handles row swaps multiple RHS and preserves inputs" {
   assert_eq(a, [[0.0, 2.0], [1.0, 3.0]])
   assert_eq(b, [[4.0, 2.0], [7.0, 4.0]])
   assert_true(
-    (try? @linalg.solve([[1.0, 2.0], [2.0, 4.0]], [[1.0], [2.0]])) is Err(_),
+    try @linalg.solve([[1.0, 2.0], [2.0, 4.0]], [[1.0], [2.0]]) catch {
+      _ => true
+    } noraise {
+      _ => false
+    },
   )
 }
 
@@ -41,7 +45,13 @@ test "QR rank deficiency returns explicit rank and valid basic solution" {
   ])
   assert_eq(wide.rank, 2)
   assert_true(wide.residual_sum_squares[0] < 0.00000000000000000001)
-  assert_true((try? @linalg.least_squares([[1.0], [2.0]], [[1.0]])) is Err(_))
+  assert_true(
+    try @linalg.least_squares([[1.0], [2.0]], [[1.0]]) catch {
+      _ => true
+    } noraise {
+      _ => false
+    },
+  )
 }
 
 ///|
@@ -59,25 +69,46 @@ test "Householder scaling avoids overflow from raw squared column norms" {
 test "QR rejects finite inputs with unrepresentable norms instead of reporting zero rank" {
   // sqrt(2)*1.7e308 exceeds Double maximum despite finite individual entries.
   assert_true(
-    (try? @linalg.least_squares([[1.7e308], [1.7e308]], [[0.0], [0.0]]))
-    is Err(_),
+    try @linalg.least_squares([[1.7e308], [1.7e308]], [[0.0], [0.0]]) catch {
+      _ => true
+    } noraise {
+      _ => false
+    },
   )
   assert_true(
-    (try? @linalg.least_squares([[1.0, 1.7e308], [0.0, 1.7e308]], [[0.0], [0.0]]))
-    is Err(_),
+    try
+      @linalg.least_squares([[1.0, 1.7e308], [0.0, 1.7e308]], [[0.0], [0.0]])
+    catch {
+      _ => true
+    } noraise {
+      _ => false
+    },
   )
   assert_true(
-    (try? @linalg.least_squares([[1.7e308], [1.7e308]], [[0.0], [0.0]], rcond=0))
-    is Err(_),
+    try
+      @linalg.least_squares([[1.7e308], [1.7e308]], [[0.0], [0.0]], rcond=0)
+    catch {
+      _ => true
+    } noraise {
+      _ => false
+    },
   )
 }
 
 ///|
 test "QR rejects overflowing reflections even when initial norms are finite" {
   assert_true(
-    (try? @linalg.least_squares([[1.0e308], [0.0]], [[0.0], [0.0]])) is Err(_),
+    try @linalg.least_squares([[1.0e308], [0.0]], [[0.0], [0.0]]) catch {
+      _ => true
+    } noraise {
+      _ => false
+    },
   )
   assert_true(
-    (try? @linalg.least_squares([[1.0], [0.0]], [[1.0e308], [0.0]])) is Err(_),
+    try @linalg.least_squares([[1.0], [0.0]], [[1.0e308], [0.0]]) catch {
+      _ => true
+    } noraise {
+      _ => false
+    },
   )
 }

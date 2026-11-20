@@ -12,6 +12,7 @@ pub suberror BlasError {
   Invalid(String)
   Unavailable(String)
 } derive(@debug.Debug)
+pub fn BlasError::to_repr(Self) -> @debug.Repr
 
 // Types and methods
 pub struct Backend {

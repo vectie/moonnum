@@ -23,11 +23,13 @@ pub struct Adam {
   beta2 : Double
   epsilon : Double
 } derive(ToJson, @json.FromJson)
+pub fn Adam::from_json(Json, @json.JsonPath) -> Self raise @json.JsonDecodeError
 pub fn Adam::new(Int, Double, beta1? : Double, beta2? : Double, epsilon? : Double) -> Self
 pub fn Adam::restore(Self, Self) -> Unit
 pub fn Adam::set_learning_rate(Self, Double) -> Unit
 pub fn Adam::snapshot(Self) -> Self
 pub fn Adam::step(Self, Array[Double], Tape, Array[Value], max_norm? : Double, max_value? : Double, gradient_trace? : (Array[Double], Array[Double], Double) -> Unit) -> Double
+pub fn Adam::to_json(Self) -> Json
 
 type LinearBlock
 
@@ -40,6 +42,7 @@ pub fn MLP::forward(Self, Tape, Array[Value], Array[Value]) -> Array[Value]
 pub fn MLP::new(Array[Int], Rng, zero_last? : Bool) -> Self
 pub fn MLP::predict(Self, Array[Double]) -> Array[Double]
 pub fn MLP::snapshot(Self) -> Self
+pub fn MLP::to_repr(Self) -> @debug.Repr
 
 type Node
 
@@ -48,6 +51,7 @@ pub(all) struct Normalization {
   scale : Array[Double]
 } derive(@debug.Debug)
 pub fn Normalization::apply(Self, Tape, Array[Value]) -> Array[Value]
+pub fn Normalization::to_repr(Self) -> @debug.Repr
 
 pub struct Rng {
   // private fields
@@ -59,6 +63,7 @@ pub fn Rng::set_state(Self, UInt) -> Unit
 pub fn[T] Rng::shuffle(Self, Array[T]) -> Unit
 pub fn Rng::snapshot(Self) -> Self
 pub fn Rng::state(Self) -> UInt
+pub fn Rng::to_repr(Self) -> @debug.Repr
 pub fn Rng::uniform(Self) -> Double
 
 pub struct Tape {
@@ -96,6 +101,7 @@ pub struct Value {
   id : Int
   value : Double
 } derive(@debug.Debug)
+pub fn Value::to_repr(Self) -> @debug.Repr
 
 // Type aliases
 

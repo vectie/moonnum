@@ -1,3 +1,7 @@
 import {
+  "moonbitlang/core/debug",
+}
+
+import {
   "vectie/moonnum/linalg",
 } for "test"

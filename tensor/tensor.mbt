@@ -63,7 +63,7 @@ pub fn Tensor::from_array(
     raise Invalid("data length differs from shape")
   }
   let storage = match dtype {
-    F32 => Single(values.map(x => x.to_float()))
+    F32 => Single(values.map(x => Float::from_double(x)))
     F64 => DoublePrecision(values.copy())
   }
   { storage, dimensions: shape.copy(), steps: row_strides(shape), offset: 0, }
@@ -151,7 +151,7 @@ fn Tensor::read_at(self : Tensor, index : Int32) -> Double {
 ///|
 fn Tensor::write_at(self : Tensor, index : Int32, value : Double) -> Unit {
   match self.storage {
-    Single(values) => values[index] = value.to_float()
+    Single(values) => values[index] = Float::from_double(value)
     DoublePrecision(values) => values[index] = value
   }
 }

@@ -111,7 +111,7 @@ pub fn Tensor::silu(self : Tensor) -> Tensor {
 ///|
 fn rounded(dtype : DType, value : Double) -> Double {
   match dtype {
-    F32 => value.to_float().to_double()
+    F32 => Float::from_double(value).to_double()
     F64 => value
   }
 }
@@ -205,8 +205,8 @@ pub fn Tensor::matmul(
     raise Invalid("matmul inner dimensions")
   }
   let batch = broadcast_shape(
-    a.dimensions[:ar - 2].to_array(),
-    b.dimensions[:br - 2].to_array(),
+    a.dimensions[:ar - 2].to_owned(),
+    b.dimensions[:br - 2].to_owned(),
   )
   let ashape = batch.copy()
   ashape.append([m, k])
@@ -250,8 +250,8 @@ pub fn Tensor::matmul(
         F32 =>
           selected
           .gemm_f32(
-            packed_a.map(x => x.to_float()),
-            packed_b.map(x => x.to_float()),
+            packed_a.map(x => Float::from_double(x)),
+            packed_b.map(x => Float::from_double(x)),
             m,
             n,
             k,
